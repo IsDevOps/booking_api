@@ -16,7 +16,8 @@ dotenv.config();
 
 const port = process.env.PORT || 5000;
 
-const connect = async () => {
+const connect = async () => 
+{
   try {
     mongoose.connect(process.env.MONGO_DB);
     console.log("Database Connected");
@@ -35,9 +36,10 @@ mongoose.connection.on("Connected", () => {
 //MIDDLEWARE
 app.use(express.json());
 
-app.use("/api/auth/v1", AuthRoute);
-app.use("/api/user/v1", UserRouter);
+app.use("/api/v1/auth", AuthRoute);
+app.use("/api/v1/user", UserRouter);
 app.use("/api/v1/hotel", HotelRoute);
+
 app.use(ErrorHandler );
 app.use(NotFound);
 
