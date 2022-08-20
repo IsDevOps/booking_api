@@ -18,10 +18,18 @@ export const createUser = async (req, res, next) => {
 };
 
 export const loginUser = async (req, res, next) => {
-  const users = new userModel(req.param.id);
   try {
-    const saveUsers = await users.save();
-    res.status(200).send({ message: "User Created", saveUsers });
+    const user = await userModel.findOne({ username: req.body.username });
+    if (!user) {
+      res.status(404).json("Not found");
+    }
+    const isPasswordCorrect = await bcrypt.compare(
+      req.body.password,
+      user.password
+    );
+    if (!isPasswordCorrect) return next("Invalid username/password");
+    const { password, isAdmin, ...otherDetails } = user._doc;
+    res.status(200).json({ ...otherDetails });
   } catch (error) {
     next(error);
   }
