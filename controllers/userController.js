@@ -1,16 +1,16 @@
 import userModel from "../models/userModel.js";
 
 //UPDATE USER
-export const updateHotel = async (req, res, next) => {
+export const updateUser = async (req, res, next) => {
     try {
-        const updateHotel = await userModel.findByIdAndUpdate(
+        const updateUser = await userModel.findByIdAndUpdate(
           req.params.id,
           {
             $set: req.body,
           },
           { new: true }
         );
-        res.status(200).json({ msg: updateHotel });
+        res.status(200).json({ msg: updateUser });
       } catch (err) {
         next(err)
       }
@@ -18,10 +18,10 @@ export const updateHotel = async (req, res, next) => {
 //--------------------------------------------------------------------------------------------------------
 
 //GET SINGLE USER
-  export const getHotel = async (req, res, next) => {
+  export const getUser = async (req, res, next) => {
     try {
-      const saveHotel = await userModel.findById()
-      res.status(200).json({ msg: saveHotel });
+      const getUser = await userModel.findById(req.params.id)
+      res.status(200).json({ msg: getUser });
     } catch (err) {
       next(err);
     }
@@ -29,17 +29,17 @@ export const updateHotel = async (req, res, next) => {
   //------------------------------------------------------------------------------------------------------
 
   // GET ALL USERS
-  export const getAllHotel = async (req, res, next) => {
+  export const getAllUser = async (req, res, next) => {
     try {
-        const allHotel = await userModel.find();
-        res.status(200).json({ msg: allHotel });
+        const allUser = await userModel.find();
+        res.status(200).json({ msg: allUser });
       } catch (err) {
         next(err);
       }
   };
 //----------------------------------------------------------------------------------------------------------
 //DELETE USER
-  export const deleteHotel = async (req, res, next) => {
+  export const deleteUser = async (req, res, next) => {
     try {
         await userModel.findByIdAndDelete(req.params.id);
         if (!req.params.id) {

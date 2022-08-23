@@ -4,9 +4,8 @@ import dotenv from "dotenv";
 import AuthRoute from "./routes/auth.js";
 import UserRouter from "./routes/users.js";
 import HotelRoute from "./routes/hotels.js";
-import ErrorHandler from "./middleware/ErrorHandler.js";
-import NotFound from "./middleware/NotFound.js";
 import cookieParser from "cookie-parser";
+import { CreateError } from "./middleware/Errorhandler.js";
 //---------------------------------------------------------------------------------------------------------
 
 const app = express();
@@ -38,8 +37,16 @@ app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1/user", UserRouter);
 app.use("/api/v1/hotel", HotelRoute);
 
-app.use(ErrorHandler);
-app.use(NotFound);
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong !";
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack,
+  });
+});
 
 //SERVER CONNECTION
 app.listen(port, () => {
