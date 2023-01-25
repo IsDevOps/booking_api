@@ -1,21 +1,20 @@
 import express from 'express';
 import mongoose from "mongoose";
-import dotenv from "dotenv";
 import AuthRoute from './routes/auth.js'
 import UserRouter from './routes/users.js'
 import HotelRoute from './routes/hotels.js'
 import ErrorHandler from './middleware/ErrorHandler.js';
 import NotFound from './middleware/NotFound.js';
+import dotenv from 'dotenv'
+
 
 
 
 const app = express();
-dotenv.config();
-
-
 
 const port = process.env.PORT || 5000;
 
+dotenv.config();
 const connect = async () => 
 {
   try {
@@ -26,7 +25,7 @@ const connect = async () =>
   }
 };
 
-mongoose.connection.on("Disconnected", () => {
+mongoose.connection.off("Disconnected", () => {
   console.log("Disconnected");
 });
 mongoose.connection.on("Connected", () => {
