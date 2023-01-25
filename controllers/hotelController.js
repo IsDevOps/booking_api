@@ -1,4 +1,4 @@
-import hotelModel from '../models/hotelModel.js'
+
 export const createHotel = async (req, res, next) => {
   const createHotel = new hotelModel(req.body);
   try {
@@ -26,7 +26,7 @@ export const updateHotel = async (req, res, next) => {
 
   export const getHotel = async (req, res, next) => {
     try {
-      const saveHotel = await hotelModel.findById(req.params.id)
+      const saveHotel = await createHotel.save();
       res.status(200).json({ msg: saveHotel });
     } catch (err) {
       next(err);

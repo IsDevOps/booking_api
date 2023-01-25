@@ -1,20 +1,22 @@
-import express from 'express';
+import express from "express";
 import mongoose from "mongoose";
+import dotenv from "dotenv";
 import AuthRoute from './routes/auth.js'
 import UserRouter from './routes/users.js'
 import HotelRoute from './routes/hotels.js'
 import ErrorHandler from './middleware/ErrorHandler.js';
 import NotFound from './middleware/NotFound.js';
-import dotenv from 'dotenv'
-
 
 
 
 const app = express();
+dotenv.config();
+
+
 
 const port = process.env.PORT || 5000;
+//---------------------------------------------------------------------------------------------------------
 
-dotenv.config();
 const connect = async () => 
 {
   try {
@@ -25,23 +27,33 @@ const connect = async () =>
   }
 };
 
-mongoose.connection.off("Disconnected", () => {
+mongoose.connection.on("Disconnected", () => {
   console.log("Disconnected");
 });
 mongoose.connection.on("Connected", () => {
   console.log("Connected");
 });
+//-----------------------------------------------------------------------------------------------------------
 
 //MIDDLEWARE
 app.use(express.json());
-
+app.use(cookieParser());
 app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1/user", UserRouter);
 app.use("/api/v1/hotel", HotelRoute);
 
-app.use(ErrorHandler );
-app.use(NotFound);
+app.use((err, req, res, next) => {
+  const errorStatus = err.status || 500;
+  const errorMessage = err.message || "Something went wrong !";
+  return res.status(errorStatus).json({
+    success: false,
+    status: errorStatus,
+    message: errorMessage,
+    stack: err.stack,
+  });
+});
 
+//SERVER CONNECTION
 app.listen(port, () => {
   connect();
   console.log(`Booking API_Server Running on port ${port}!`);
