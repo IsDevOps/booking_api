@@ -4,8 +4,8 @@ import dotenv from "dotenv";
 import AuthRoute from './routes/auth.js'
 import UserRouter from './routes/users.js'
 import HotelRoute from './routes/hotels.js'
-import ErrorHandler from './middleware/ErrorHandler.js';
-import NotFound from './middleware/NotFound.js';
+// import ErrorHandler from './middleware/ErrorHandler.js';
+// import NotFound from './middleware/NotFound.js';
 
 
 
@@ -37,7 +37,7 @@ mongoose.connection.on("Connected", () => {
 
 //MIDDLEWARE
 app.use(express.json());
-app.use(cookieParser());
+// app.use(cookieParser());
 app.use("/api/v1/auth", AuthRoute);
 app.use("/api/v1/user", UserRouter);
 app.use("/api/v1/hotel", HotelRoute);
