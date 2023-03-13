@@ -1,0 +1,16 @@
+version: "3.8"
+services:
+  api:
+    build: ./backend
+    ports:
+      - 3000:3000
+    environment:
+      MONGO_DB: mongodb+srv://ose1:oseghale@cluster0.phrddjp.mongodb.net/booking?retryWrites=true&w=majority 
+  db:
+    image: mongo:latest
+    ports:
+      - 27017:27017
+    volumes:
+      - booking:/data/db
+volumes:
+  booking:
