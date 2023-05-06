@@ -57,5 +57,5 @@ app.use((err, req, res, next) => {
 //SERVER CONNECTION
 app.listen(port, () => {
   connect();
-  console.log(`Booking API_Server Running on port ${port}!`);
+  console.log(`Booking API_Server Running on port ${port}`);
 });
