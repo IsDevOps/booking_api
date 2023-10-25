@@ -1,9 +1,9 @@
 {
   "name": "booking",
+  "type": "module",
   "version": "1.0.0",
   "description": "Booking for your tour",
   "main": "index.js",
-  "type": "module",
   "scripts": {
     "dev": "nodemon index.js"
   },
